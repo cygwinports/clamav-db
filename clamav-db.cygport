@@ -1,0 +1,29 @@
+NAME="clamav-db"
+VERSION=55.21355
+RELEASE=1.$(date +%Y%m%d)
+CATEGORY="Utils"
+SUMMARY="ClamAV virus definitions"
+DESCRIPTION="Clam AntiVirus is a GPL anti-virus toolkit for UNIX, featuring
+command-line scanner, fast, multi-threaded daemon, database updater with
+support for digital signatures, virus scanner C library, detection of over
+20000 viruses, worms and trojans, built-in support for RAR (2.0), Zip, Gzip,
+Bzip2, built-in support for Mbox, Maildir and raw mail files"
+HOMEPAGE="http://clamav.net/"
+SRC_URI="
+	http://database.clamav.net/main.cvd#/main-${VERSION%.*}.cvd
+	http://database.clamav.net/daily.cvd#/daily-${VERSION#*.}.cvd
+	http://database.clamav.net/bytecode.cvd#/bytecode-271.cvd
+"
+SRC_DIR=.
+
+ARCH=noarch
+
+src_compile() { :; }
+
+src_install() {
+	cd ${S}
+	insinto /var/lib/clamav
+	newins main-*.cvd main.cvd
+	newins daily-*.cvd daily.cvd
+	newins bytecode-*.cvd bytecode.cvd
+}
